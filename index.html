@@ -134,7 +134,7 @@
     <header class="wh-mast">
       <div class="wh-eyebrow">The People's Wordhord &middot; Appendix</div>
       <h1 class="wh-title">The Root&#8209;Hoard</h1>
-      <p class="wh-sub">A catalogue of combining forms for coining creatures and plants. Snap a front&#8209;form to a back&#8209;form; the hyphen on each specimen shows which end it takes.</p>
+      <p class="wh-sub">A catalogue of combining forms for coining plants and creatures and things stranger still. Snap a front&#8209;form to a back&#8209;form; the hyphen on each specimen shows which end it takes.</p>
       <div class="wh-rule">fusion rule &nbsp;&middot;&nbsp; glue Greek parts with a connective <b>&#8209;o&#8209;</b> (chloro+phyll), drop it before a vowel (thalasso+odon &rarr; <b>Thalassodon</b>). one language per name reads truest.</div>
       <div class="wh-key">origin&nbsp; <span>G</span> Greek&nbsp;&middot;&nbsp;<span style="color:var(--rust)">L</span> Latin&nbsp;&middot;&nbsp;<span style="color:var(--brass)">G/L</span> both</div>
     </header>
@@ -301,8 +301,8 @@
   { r: "pneumo‑ / ‑pnoea", m: "breath, lung, air", o: "G", d: "Body", ex: "pneumatic" },
   { r: "haemo‑ / ‑aemia", m: "blood", o: "G", d: "Body", ex: "haemal" },
   { r: "sangui‑", m: "blood", o: "L", d: "Body", ex: "sanguine" },
-  { r: "neuro‑ / ‑neuron", m: "nerve, sinew", o: "G", d: "Body", ex: "neural" },
-  { r: "myelo‑ / medullo‑", m: "marrow, pith", o: "G / L", d: "Body", ex: "myeloid" },
+  { r: "neuro‑ / ‑neuron", m: "nerve, sinew", o: "G", d: "Mind & Sense", ex: "neural" },
+  { r: "myelo‑ / medullo‑", m: "marrow, pith", o: "G / L", d: "Mind & Sense", ex: "myeloid" },
   { r: "adeno‑ / ‑aden", m: "gland", o: "G", d: "Body", ex: "adenoid" },
   { r: "masto‑ / mammi‑", m: "breast", o: "G / L", d: "Body", ex: "mastoid" },
   { r: "oo‑ / ovi‑", m: "egg", o: "G / L", d: "Body", ex: "oviform" },
@@ -483,7 +483,7 @@
   { r: "echo‑", m: "echo, resounding", o: "G", d: "Mind & Sense", ex: "echoic" },
   { r: "aeolo‑", m: "of the wind; wind-voiced", o: "G", d: "Mind & Sense", ex: "Aeolian" },
   { r: "tono‑ / ‑tone", m: "tension, tone, pitch", o: "G", d: "Mind & Sense", ex: "monotone" },
-  { r: "chrono‑ / ‑chron", m: "time", o: "G", d: "Mind & Sense", ex: "chronic" },
+  { r: "chrono‑ / ‑chron", m: "time", o: "G", d: "Effects", ex: "chronic" },
   // ── CREATURES ──────────────────────
   { r: "sauro‑ / ‑saurus", m: "lizard", o: "G", d: "Creatures", ex: "Tyrannosaurus" },
   { r: "therio‑ / ‑therium", m: "beast, wild animal", o: "G", d: "Creatures", ex: "Megatherium" },
@@ -701,9 +701,69 @@
   { r: "smaragdo‑ / ‑smaragdos", m: "emerald", o: "G", d: "Material", ex: "smaragdine" },
   { r: "pyrito‑ / ‑pyrites", m: "fire-stone, pyrite", o: "G", d: "Material", ex: "pyrite" },
   { r: "margaro‑ / ‑margarita", m: "pearl", o: "G/L", d: "Material", ex: "margarite" },
+
+  // ── MIND & SENSE (brain, senses, dream) ──
+  { r: "encephalo‑ / ‑encephalon", m: "brain", o: "G", d: "Mind & Sense", ex: "encephalitis" },
+  { r: "cerebro‑ / ‑cerebrum", m: "brain", o: "L", d: "Mind & Sense", ex: "cerebral" },
+  { r: "cerebello‑", m: "cerebellum, little brain", o: "L", d: "Mind & Sense", ex: "cerebellum" },
+  { r: "cortico‑ / ‑cortex", m: "cortex, outer rind", o: "L", d: "Mind & Sense", ex: "cortical" },
+  { r: "thalamo‑ / ‑thalamus", m: "thalamus, inner chamber", o: "G", d: "Mind & Sense", ex: "thalamic" },
+  { r: "axo‑ / ‑axon", m: "axon, axis", o: "G", d: "Mind & Sense", ex: "axonal" },
+  { r: "synapto‑ / ‑synapse", m: "synapse, junction", o: "G", d: "Mind & Sense", ex: "synaptic" },
+  { r: "gangli‑ / ‑ganglion", m: "ganglion, nerve-knot", o: "G", d: "Mind & Sense", ex: "ganglionic" },
+  { r: "menti‑ / ‑mens", m: "mind", o: "L", d: "Mind & Sense", ex: "mental" },
+  { r: "audi‑", m: "hearing", o: "L", d: "Mind & Sense", ex: "audition" },
+  { r: "gusto‑ / ‑geusia", m: "taste", o: "G/L", d: "Mind & Sense", ex: "gustatory" },
+  { r: "hapto‑ / ‑haptic", m: "touch", o: "G", d: "Mind & Sense", ex: "haptic" },
+  { r: "opto‑ / ‑opia", m: "sight, vision", o: "G", d: "Mind & Sense", ex: "optic" },
+  { r: "algo‑ / ‑algia", m: "pain", o: "G", d: "Mind & Sense", ex: "neuralgia" },
+  { r: "kinesi‑ / ‑kinesis", m: "movement, motion-sense", o: "G", d: "Mind & Sense", ex: "kinesthetic" },
+  { r: "oneiro‑ / ‑oneiros", m: "dream", o: "G", d: "Mind & Sense", ex: "oneiric" },
+  { r: "narco‑ / ‑narcosis", m: "stupor, numbness", o: "G", d: "Mind & Sense", ex: "narcotic" },
+  { r: "‑lepsy / ‑lepsis", m: "seizure", o: "G", d: "Mind & Sense", ex: "epilepsy" },
+  // ── MIND & SENSE (machine intelligence) ──
+  { r: "cyberno‑ / cyber‑", m: "steersman, control, cybernetic", o: "G", d: "Mind & Sense", ex: "cybernetics" },
+  { r: "arithmo‑ / ‑arithm", m: "number, reckoning", o: "G", d: "Mind & Sense", ex: "algorithm" },
+  { r: "calculo‑ / ‑calculus", m: "reckoning, calculation", o: "L", d: "Mind & Sense", ex: "calculus" },
+  { r: "logo‑ / ‑logic", m: "reason, logic", o: "G", d: "Mind & Sense", ex: "logic" },
+  { r: "simulacro‑ / ‑simulacrum", m: "likeness, simulation", o: "L", d: "Mind & Sense", ex: "simulacrum" },
+  { r: "eido‑ / ‑eidolon", m: "image, phantom, form", o: "G", d: "Mind & Sense", ex: "eidolon" },
+  { r: "synthe‑ / ‑synthesis", m: "putting-together, synthetic", o: "G", d: "Mind & Sense", ex: "synthesis" },
+  { r: "memor‑ / ‑memoria", m: "memory", o: "L", d: "Mind & Sense", ex: "memory" },
+  { r: "dato‑ / ‑datum", m: "data, the given", o: "L", d: "Mind & Sense", ex: "data" },
+
+  // ── EFFECTS ──
+  { r: "energo‑ / ‑ergy", m: "energy, work", o: "G", d: "Effects", ex: "energy" },
+  { r: "gravi‑", m: "gravity, weight, attraction", o: "L", d: "Effects", ex: "gravity" },
+  { r: "baro‑", m: "pressure, weight", o: "G", d: "Effects", ex: "barometer" },
+  { r: "vortic‑ / ‑vortex", m: "whirl, vortex", o: "L", d: "Effects", ex: "vortex" },
+  { r: "stato‑ / ‑stasis", m: "arrest, equilibrium, suspension", o: "G", d: "Effects", ex: "stasis" },
+  { r: "vibro‑", m: "vibration, quivering", o: "L", d: "Effects", ex: "vibrate" },
+  { r: "cymato‑ / ‑cyma", m: "wave", o: "G", d: "Effects", ex: "cymatics" },
+  { r: "bronto‑", m: "thunder", o: "G", d: "Effects", ex: "Brontosaurus" },
+  { r: "radio‑ / ‑radius", m: "ray, radiance, radiation", o: "L", d: "Effects", ex: "radiation" },
+  { r: "actino‑", m: "ray, beam", o: "G", d: "Effects", ex: "actinic" },
+  { r: "aura‑ / ‑aura", m: "aura, emanation, glow", o: "L", d: "Effects", ex: "aura" },
+  { r: "flagra‑", m: "blaze, conflagration", o: "L", d: "Effects", ex: "conflagration" },
+  { r: "magneto‑", m: "magnetism, attraction", o: "G", d: "Effects", ex: "magnetic" },
+  { r: "iono‑ / ‑ion", m: "charged particle, ion", o: "G", d: "Effects", ex: "ionization" },
+  { r: "causto‑", m: "burning, caustic", o: "G", d: "Effects", ex: "caustic" },
+  { r: "geno‑ / ‑genesis", m: "becoming, origination", o: "G", d: "Effects", ex: "genesis" },
+  { r: "fissi‑", m: "fission, splitting, cleaving", o: "L", d: "Effects", ex: "fission" },
+  { r: "clysmo‑ / ‑clysm", m: "deluge, cataclysm", o: "G", d: "Effects", ex: "cataclysm" },
+  { r: "plasmo‑ / ‑plasma", m: "plasma, formed energy", o: "G", d: "Effects", ex: "plasma" },
+  { r: "fusi‑ / ‑fusion", m: "fusion, merging, pouring-together", o: "L", d: "Effects", ex: "fusion" },
+
+  // ── PSI (remote forces + faculties) ──
+  { r: "tele‑", m: "far, distant; action at a distance", o: "G", d: "Effects", ex: "telepathy" },
+  { r: "levi‑", m: "lightness, buoyancy, raising", o: "L", d: "Effects", ex: "levitation" },
+  { r: "porto‑ / ‑port", m: "carrying, conveyance, transport", o: "L", d: "Effects", ex: "teleport" },
+  { r: "patho‑ / ‑pathy", m: "feeling, sensing, affect", o: "G", d: "Mind & Sense", ex: "empathy" },
+  { r: "claro‑ / clari‑", m: "clear, lucid, clear-seeing", o: "L", d: "Mind & Sense", ex: "clairvoyance" },
+  { r: "cogni‑ / cogit‑", m: "knowing, thinking", o: "L", d: "Mind & Sense", ex: "cognition" },
 ];
 
-  var DOMAINS = ["Plant","Material","Body","Creatures","Size & Form","Colour & Light","Life & Decay","Habitat","Mind & Sense","Temperament","Roles","Implements"];
+  var DOMAINS = ["Plant","Material","Body","Creatures","Size & Form","Colour & Light","Life & Decay","Habitat","Mind & Sense","Temperament","Roles","Implements","Effects"];
   var VOWELS = "aeiouy";
   var STORE_KEY = "wordhord:root-hoard:custom";
 
