@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Root-Hoard &middot; The People's Wordhord</title>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+        .wh-root{
+          --paper:#FFFFFF; --paper2:#DDDED2; --ink:#1B231E; --ink2:#4A554D;
+          --verd:#3C7A69; --verd-d:#2C5C4F; --rust:#8A4636; --brass:#957A38;
+          --line:#C4C5B7; --glow:#6FB39E;
+          --shadow-sm:0 1px 2px rgba(27,35,30,.06);
+          --shadow:0 1px 3px rgba(27,35,30,.10),0 1px 2px rgba(27,35,30,.05);
+          --shadow-lg:0 4px 14px rgba(27,35,30,.08),0 2px 5px rgba(27,35,30,.05);
+          background:var(--paper); color:var(--ink);
+          font-family:'IBM Plex Sans',system-ui,sans-serif;
+          min-height:100vh; padding:0 0 5rem; line-height:1.5;
+        }
+        .wh-wrap{max-width:1040px;margin:0 auto;padding:0 1.25rem;}
+        .wh-mast{padding:2.75rem 0 1.5rem;border-bottom:1px solid var(--line);}
+        .wh-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.22em;
+          text-transform:uppercase;color:var(--verd-d);}
+        .wh-title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.2rem,6vw,3.6rem);
+          line-height:1.02;margin:.5rem 0 .35rem;letter-spacing:-.01em;}
+        .wh-title em{font-style:italic;font-weight:400;color:var(--verd-d);}
+        .wh-sub{max-width:60ch;color:var(--ink2);font-size:1rem;}
+        .wh-rule{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--ink2);
+          margin-top:1rem;padding:.7rem .9rem;background:#fff;box-shadow:var(--shadow);border-radius:2px;}
+        .wh-rule b{color:var(--rust);font-weight:500;}
+        .wh-key{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink2);margin-top:.6rem;}
+        .wh-key span{color:var(--verd-d);}
+
+        /* anvil */
+        .wh-anvil{position:sticky;top:0;z-index:5;background:var(--paper);
+          border-bottom:1px solid var(--line);padding:.85rem 0;}
+        .wh-anvil-in{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+        .wh-anvil-lab{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.18em;
+          text-transform:uppercase;color:var(--verd-d);}
+        .wh-conjure{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;}
+        .wh-conjure-btn{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.06em;
+          padding:.3rem .6rem;border:1px solid var(--line);background:transparent;color:var(--ink2);
+          cursor:pointer;border-radius:2px;transition:.15s;}
+        .wh-conjure-btn:hover{border-color:var(--rust);color:var(--rust);background:rgba(138,70,54,.06);}
+        .wh-slots{display:flex;gap:.4rem;flex-wrap:wrap;flex:1;min-width:180px;}
+        .wh-slot{font-family:'Fraunces',serif;font-style:italic;font-size:.95rem;
+          background:#fff;border:1px solid var(--line);padding:.15rem .5rem;border-radius:2px;box-shadow:var(--shadow-sm);
+          display:inline-flex;align-items:center;gap:.35rem;}
+        .wh-slot-x{border:none;background:none;color:var(--ink2);cursor:pointer;font-family:'IBM Plex Sans';
+          font-style:normal;font-size:1rem;line-height:1;padding:0;transition:.15s;}
+        .wh-slot-x:hover{color:var(--rust);}
+        .wh-empty-slot{color:var(--ink2);font-family:'IBM Plex Sans';font-style:normal;font-size:.85rem;}
+        .wh-coin{text-align:right;}
+        .wh-coin-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;color:var(--verd-d);line-height:1.1;}
+        .wh-coin-gloss{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--rust);letter-spacing:.04em;}
+        .wh-btn{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+          text-transform:uppercase;background:none;border:1px solid var(--line);color:var(--ink2);
+          padding:.3rem .6rem;cursor:pointer;border-radius:2px;transition:.15s;}
+        .wh-btn:hover{border-color:var(--verd);color:var(--verd-d);}
+
+        /* controls */
+        .wh-ctrl{padding:1.2rem 0 .4rem;display:flex;flex-direction:column;gap:.8rem;}
+        .wh-search{width:100%;font-family:'Fraunces',serif;font-size:1.15rem;font-style:italic;
+          background:transparent;border:none;border-bottom:2px solid var(--ink);
+          padding:.4rem 0;color:var(--ink);outline:none;}
+        .wh-search::placeholder{color:var(--ink2);opacity:.7;}
+        .wh-search:focus{border-color:var(--verd);}
+        .wh-chips{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;}
+        .wh-chip{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.06em;
+          padding:.3rem .6rem;border:1px solid var(--line);background:transparent;color:var(--ink2);
+          cursor:pointer;border-radius:2px;transition:.15s;}
+        .wh-chip[data-on="true"]{background:var(--verd-d);color:var(--paper);border-color:var(--verd-d);}
+        .wh-chip:hover{border-color:var(--verd);}
+        .wh-orig{display:flex;gap:.3rem;margin-left:auto;}
+        .wh-orig .wh-chip[data-on="true"]{background:var(--rust);border-color:var(--rust);}
+
+        /* specimens */
+        .wh-domain{margin-top:2.4rem;}
+        .wh-dom-h{display:flex;align-items:baseline;gap:.7rem;border-bottom:2px solid var(--ink);
+          padding-bottom:.4rem;}
+        .wh-dom-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;}
+        .wh-dom-n{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink2);}
+        .wh-list{margin-top:.3rem;}
+        .wh-item{display:grid;grid-template-columns:minmax(150px,240px) 1fr auto;gap:1rem;align-items:baseline;
+          padding:.55rem 0;border-bottom:1px solid var(--line);cursor:pointer;transition:.12s;}
+        .wh-item:hover{background:rgba(27,35,30,.035);}
+        .wh-item:hover .wh-add{opacity:1;}
+        .wh-r{font-family:'Fraunces',serif;font-style:italic;font-size:1.08rem;}
+        .wh-r .mine{color:var(--verd-d);}
+        .wh-m{color:var(--ink);font-size:.95rem;}
+        .wh-meta{display:flex;align-items:center;gap:.6rem;}
+        .wh-ex{font-family:'IBM Plex Sans';font-style:italic;font-size:.82rem;color:var(--ink2);}
+        .wh-o{font-family:'IBM Plex Mono',monospace;font-size:.68rem;padding:.08rem .35rem;border-radius:2px;
+          border:1px solid var(--line);}
+        .wh-o-G{color:var(--verd-d);border-color:var(--verd);}
+        .wh-o-L{color:var(--rust);border-color:var(--rust);}
+        .wh-o-GL{color:var(--brass);border-color:var(--brass);}
+        .wh-add{opacity:0;font-family:'IBM Plex Mono',monospace;font-size:1.05rem;color:var(--verd-d);
+          transition:.12s;line-height:1;}
+        .wh-empty{padding:3rem 0;text-align:center;color:var(--ink2);font-family:'Fraunces',serif;font-style:italic;font-size:1.2rem;}
+
+        /* add-your-own */
+        .wh-own{margin-top:3.2rem;padding:1.5rem;background:#fff;box-shadow:var(--shadow-lg);border-radius:3px;}
+        .wh-own h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;margin:0 0 .2rem;}
+        .wh-own p{font-size:.88rem;color:var(--ink2);margin:0 0 1rem;max-width:62ch;}
+        .wh-fields{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;}
+        .wh-in{font-family:'IBM Plex Sans';font-size:.9rem;background:var(--paper);border:1px solid var(--line);
+          padding:.45rem .6rem;color:var(--ink);outline:none;border-radius:2px;}
+        .wh-in:focus{border-color:var(--verd);}
+        .wh-in-r{width:150px;font-family:'Fraunces';font-style:italic;}
+        .wh-in-m{flex:1;min-width:170px;}
+        .wh-note{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--verd-d);margin-left:.4rem;}
+        .wh-mine-list{margin-top:1rem;display:flex;flex-direction:column;gap:.35rem;}
+        .wh-mine-row{display:flex;gap:.6rem;align-items:baseline;font-size:.9rem;}
+        .wh-mine-row .r{font-family:'Fraunces';font-style:italic;color:var(--verd-d);min-width:150px;}
+        .wh-x{margin-left:auto;background:none;border:none;color:var(--ink2);cursor:pointer;font-family:'IBM Plex Mono';font-size:.85rem;}
+        .wh-x:hover{color:var(--rust);}
+
+        *:focus-visible{outline:2px solid var(--verd);outline-offset:2px;}
+        @media (max-width:640px){
+          .wh-item{grid-template-columns:1fr;gap:.2rem;}
+          .wh-meta{margin-top:.15rem;}
+          .wh-coin{text-align:left;}
+        }
+        @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+      
+        html,body{margin:0;padding:0;}
+        body{background:#FFFFFF;}
+</style>
+</head>
+<body>
+<div class="wh-root">
+  <div class="wh-wrap">
+    <header class="wh-mast">
+      <div class="wh-eyebrow">The People's Wordhord &middot; Appendix</div>
+      <h1 class="wh-title">The Root&#8209;Hoard</h1>
+      <p class="wh-sub">A catalogue of combining forms for coining creatures and plants. Snap a front&#8209;form to a back&#8209;form; the hyphen on each specimen shows which end it takes.</p>
+      <div class="wh-rule">fusion rule &nbsp;&middot;&nbsp; glue Greek parts with a connective <b>&#8209;o&#8209;</b> (chloro+phyll), drop it before a vowel (thalasso+odon &rarr; <b>Thalassodon</b>). one language per name reads truest.</div>
+      <div class="wh-key">origin&nbsp; <span>G</span> Greek&nbsp;&middot;&nbsp;<span style="color:var(--rust)">L</span> Latin&nbsp;&middot;&nbsp;<span style="color:var(--brass)">G/L</span> both</div>
+    </header>
+  </div>
+
+  <div class="wh-anvil">
+    <div class="wh-wrap wh-anvil-in" id="anvilIn"></div>
+  </div>
+
+  <div class="wh-wrap">
+    <div class="wh-ctrl">
+      <input class="wh-search" id="search" placeholder="search a meaning or root &mdash; tooth, rot, glass, spiral&hellip;" />
+      <div class="wh-chips" id="chips"></div>
+    </div>
+
+    <div id="results"></div>
+
+    <section class="wh-own">
+      <h3>Your own roots</h3>
+      <p>Pin an invented morpheme to a fixed meaning and it joins the hoard &mdash; appears in search, the filters, and the anvil.</p>
+      <div class="wh-fields">
+        <input class="wh-in wh-in-r" id="fr" placeholder="mol&#8209;" />
+        <input class="wh-in wh-in-m" id="fm" placeholder="meaning &mdash; e.g. colony, chorus of many" />
+        <select class="wh-in" id="fo"><option value="G">G</option><option value="L">L</option><option value="G/L">G/L</option></select>
+        <select class="wh-in" id="fd"></select>
+        <button class="wh-btn" id="addBtn">add root</button>
+        <span class="wh-note" id="note"></span>
+      </div>
+      <div id="mine"></div>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var DATA = [
+  // ── PLANT ──────────────────────────────────────────────
+  { r: "phyto‑ / ‑phyte", m: "plant, growth", o: "G", d: "Plant", ex: "epiphyte" },
+  { r: "‑phyll‑ / phyllo‑", m: "leaf", o: "G", d: "Plant", ex: "chlorophyll" },
+  { r: "rhizo‑ / ‑rhiza", m: "root", o: "G", d: "Plant", ex: "mycorrhiza" },
+  { r: "radic‑", m: "root", o: "L", d: "Plant", ex: "radicle" },
+  { r: "antho‑ / ‑anthus", m: "flower", o: "G", d: "Plant", ex: "chrysanthemum" },
+  { r: "flori‑", m: "flower", o: "L", d: "Plant", ex: "floriferous" },
+  { r: "carpo‑ / ‑carp", m: "fruit", o: "G", d: "Plant", ex: "pericarp" },
+  { r: "‑sperm / spermato‑", m: "seed", o: "G", d: "Plant", ex: "angiosperm" },
+  { r: "sporo‑ / ‑spore", m: "spore", o: "G", d: "Plant", ex: "sporangium" },
+  { r: "gemmi‑", m: "bud", o: "L", d: "Plant", ex: "gemmate" },
+  { r: "blasto‑ / ‑blast", m: "germ, bud, formative cell", o: "G", d: "Plant", ex: "blastula" },
+  { r: "dendro‑ / ‑dendron", m: "tree", o: "G", d: "Plant", ex: "rhododendron" },
+  { r: "arbor‑", m: "tree", o: "L", d: "Plant", ex: "arboreal" },
+  { r: "dryo‑", m: "oak, tree", o: "G", d: "Plant", ex: "dryad" },
+  { r: "xylo‑ / ‑xylon", m: "wood", o: "G", d: "Plant", ex: "xylem" },
+  { r: "hylo‑", m: "wood, raw matter", o: "G", d: "Plant", ex: "hylomorphic" },
+  { r: "ligni‑", m: "wood", o: "L", d: "Plant", ex: "lignify" },
+  { r: "caulo‑ / ‑caulis", m: "stem, stalk", o: "G/L", d: "Plant", ex: "acaulescent" },
+  { r: "clado‑ / ‑clade", m: "branch, shoot", o: "G", d: "Plant", ex: "cladode" },
+  { r: "rami‑", m: "branch", o: "L", d: "Plant", ex: "ramose" },
+  { r: "fronde‑", m: "frond, leafage", o: "L", d: "Plant", ex: "frondose" },
+  { r: "thallo‑ / ‑thallus", m: "undifferentiated plant body", o: "G", d: "Plant", ex: "thallophyte" },
+  { r: "myco‑ / ‑myces", m: "fungus", o: "G", d: "Plant", ex: "mycelium" },
+  { r: "bryo‑", m: "moss", o: "G", d: "Plant", ex: "bryophyte" },
+  { r: "lichen‑", m: "lichen", o: "L", d: "Plant", ex: "lichenose" },
+  { r: "pterido‑", m: "fern", o: "G", d: "Plant", ex: "pteridophyte" },
+  { r: "phyco‑", m: "seaweed, algae", o: "G", d: "Plant", ex: "phycology" },
+  { r: "gramin‑", m: "grass", o: "L", d: "Plant", ex: "graminoid" },
+  { r: "herb‑", m: "herb, soft grass", o: "L", d: "Plant", ex: "herbaceous" },
+  { r: "calyco‑", m: "cup, calyx", o: "G", d: "Plant", ex: "calyculate" },
+  { r: "spatho‑", m: "sheath, spathe", o: "G", d: "Plant", ex: "spathaceous" },
+  { r: "nemo‑", m: "grove, glade", o: "G/L", d: "Plant", ex: "nemoral" },
+  { r: "silvi‑ / sylvi‑", m: "forest", o: "L", d: "Plant", ex: "sylvan" },
+
+  // ── MATERIAL ───────────────────────────────────────────
+  { r: "hyalo‑", m: "glass, crystal", o: "G", d: "Material", ex: "hyaline" },
+  { r: "vitro‑", m: "glass", o: "L", d: "Material", ex: "vitreous" },
+  { r: "crystallo‑", m: "crystal, ice", o: "G", d: "Material", ex: "crystalline" },
+  { r: "litho‑ / ‑lith", m: "stone", o: "G", d: "Material", ex: "monolith" },
+  { r: "petro‑", m: "rock", o: "G", d: "Material", ex: "petrous" },
+  { r: "saxi‑", m: "rock, boulder", o: "L", d: "Material", ex: "saxicolous" },
+  { r: "kerato‑ / cera‑", m: "horn, keratin", o: "G", d: "Material", ex: "keratinous" },
+  { r: "cornu‑", m: "horn", o: "L", d: "Material", ex: "cornute" },
+  { r: "chitino‑", m: "chitin, shell", o: "G", d: "Material", ex: "chitinous" },
+  { r: "ostraco‑", m: "shell, potsherd", o: "G", d: "Material", ex: "ostracoderm" },
+  { r: "osteo‑ / ‑ost", m: "bone", o: "G", d: "Material", ex: "osteoid" },
+  { r: "chondro‑", m: "cartilage, grain", o: "G", d: "Material", ex: "chondral" },
+  { r: "sarco‑ / ‑sarc", m: "flesh", o: "G", d: "Material", ex: "sarcous" },
+  { r: "carno‑", m: "flesh, meat", o: "L", d: "Material", ex: "carnal" },
+  { r: "myo‑", m: "muscle", o: "G", d: "Material", ex: "myoid" },
+  { r: "collo‑", m: "glue, gel", o: "G", d: "Material", ex: "colloid" },
+  { r: "glio‑", m: "glue", o: "G", d: "Material", ex: "glial" },
+  { r: "myxo‑ / muco‑", m: "slime, mucus", o: "G/L", d: "Material", ex: "myxomycete" },
+  { r: "visci‑", m: "sticky, birdlime", o: "L", d: "Material", ex: "viscid" },
+  { r: "resino‑", m: "resin, sap", o: "L", d: "Material", ex: "resinous" },
+  { r: "gummi‑", m: "gum", o: "L", d: "Material", ex: "gummose" },
+  { r: "cero‑", m: "wax", o: "L", d: "Material", ex: "cereous" },
+  { r: "pruino‑", m: "frost-bloom, waxy sheen", o: "L", d: "Material", ex: "pruinose" },
+  { r: "fibro‑", m: "fibre", o: "L", d: "Material", ex: "fibrous" },
+  { r: "spongi‑", m: "sponge", o: "G/L", d: "Material", ex: "spongiform" },
+  { r: "ferro‑ / sidero‑", m: "iron", o: "L / G", d: "Material", ex: "ferruginous" },
+  { r: "chalco‑", m: "copper, bronze", o: "G", d: "Material", ex: "chalcolithic" },
+  { r: "auro‑ / chryso‑", m: "gold", o: "L / G", d: "Material", ex: "chrysophyte" },
+  { r: "argenta‑ / argyro‑", m: "silver", o: "L / G", d: "Material", ex: "argentine" },
+  { r: "plumbo‑", m: "lead", o: "L", d: "Material", ex: "plumbeous" },
+  { r: "halo‑ / salino‑", m: "salt", o: "G/L", d: "Material", ex: "halite" },
+  { r: "calc‑", m: "lime, chalk", o: "L", d: "Material", ex: "calcareous" },
+  { r: "gypso‑", m: "gypsum, chalk", o: "G", d: "Material", ex: "gypseous" },
+  { r: "argillo‑ / pelo‑", m: "clay, mud", o: "L / G", d: "Material", ex: "argillaceous" },
+  { r: "limo‑", m: "mud, ooze", o: "L", d: "Material", ex: "limicolous" },
+  { r: "humo‑", m: "soil, mould, earth", o: "L", d: "Material", ex: "humic" },
+  { r: "geo‑ / terra‑", m: "earth, ground", o: "G / L", d: "Material", ex: "geophyte" },
+  { r: "psammo‑ / areni‑", m: "sand", o: "G / L", d: "Material", ex: "psammophyte" },
+  { r: "pyro‑ / igni‑", m: "fire", o: "G / L", d: "Material", ex: "pyrophyte" },
+  { r: "cine‑ / tephro‑", m: "ash", o: "L / G", d: "Material", ex: "cinereous" },
+  { r: "fumi‑", m: "smoke, fume", o: "L", d: "Material", ex: "fumarole" },
+  { r: "nephe‑ / nebulo‑", m: "cloud, mist", o: "G / L", d: "Material", ex: "nebulous" },
+  { r: "hydro‑ / aqua‑", m: "water", o: "G / L", d: "Material", ex: "hydrous" },
+
+  // ── BODY ───────────────────────────────────────────────
+  { r: "‑odon / odonto‑", m: "tooth", o: "G", d: "Body", ex: "mastodon" },
+  { r: "dent‑", m: "tooth", o: "L", d: "Body", ex: "dentate" },
+  { r: "gnatho‑ / ‑gnathus", m: "jaw", o: "G", d: "Body", ex: "gnathal" },
+  { r: "‑stome / stomato‑", m: "mouth, opening", o: "G", d: "Body", ex: "cyclostome" },
+  { r: "oro‑", m: "mouth", o: "L", d: "Body", ex: "oral" },
+  { r: "glosso‑ / ‑glossa", m: "tongue", o: "G", d: "Body", ex: "glossal" },
+  { r: "lingui‑", m: "tongue", o: "L", d: "Body", ex: "lingual" },
+  { r: "cheilo‑ / labi‑", m: "lip", o: "G / L", d: "Body", ex: "labial" },
+  { r: "rhino‑ / ‑rhinus", m: "nose", o: "G", d: "Body", ex: "rhinoceros" },
+  { r: "ophthalmo‑ / ‑ops", m: "eye", o: "G", d: "Body", ex: "cyclops" },
+  { r: "oculo‑", m: "eye", o: "L", d: "Body", ex: "ocular" },
+  { r: "oto‑ / ‑otis", m: "ear", o: "G", d: "Body", ex: "otic" },
+  { r: "cephalo‑ / ‑cephalus", m: "head", o: "G", d: "Body", ex: "cephalopod" },
+  { r: "capit‑", m: "head", o: "L", d: "Body", ex: "capitate" },
+  { r: "cranio‑", m: "skull", o: "G", d: "Body", ex: "cranial" },
+  { r: "cervic‑ / trachelo‑", m: "neck", o: "L / G", d: "Body", ex: "cervical" },
+  { r: "brachio‑ / ‑brachium", m: "arm", o: "G/L", d: "Body", ex: "brachiate" },
+  { r: "cheiro‑ / chiro‑", m: "hand", o: "G", d: "Body", ex: "chiropter" },
+  { r: "mani‑", m: "hand", o: "L", d: "Body", ex: "manual" },
+  { r: "dactylo‑ / ‑dactylus", m: "finger, toe", o: "G", d: "Body", ex: "pterodactyl" },
+  { r: "digit‑", m: "finger, toe", o: "L", d: "Body", ex: "digitate" },
+  { r: "podo‑ / ‑pod / ‑pus", m: "foot", o: "G", d: "Body", ex: "gastropod" },
+  { r: "pedi‑", m: "foot", o: "L", d: "Body", ex: "pedate" },
+  { r: "onycho‑ / ‑onyx", m: "claw, nail", o: "G", d: "Body", ex: "onychophoran" },
+  { r: "ungui‑", m: "claw, nail", o: "L", d: "Body", ex: "unguiculate" },
+  { r: "uro‑ / ‑urus", m: "tail", o: "G", d: "Body", ex: "uropod" },
+  { r: "caud‑", m: "tail", o: "L", d: "Body", ex: "caudate" },
+  { r: "ptero‑ / ‑ptera / ‑pteryx", m: "wing, feather", o: "G", d: "Body", ex: "archaeopteryx" },
+  { r: "ali‑", m: "wing", o: "L", d: "Body", ex: "aliform" },
+  { r: "dermo‑ / ‑derm", m: "skin", o: "G", d: "Body", ex: "pachyderm" },
+  { r: "cuti‑", m: "skin, rind", o: "L", d: "Body", ex: "cuticle" },
+  { r: "lepido‑ / ‑lepis", m: "scale", o: "G", d: "Body", ex: "lepidote" },
+  { r: "squami‑", m: "scale", o: "L", d: "Body", ex: "squamous" },
+  { r: "tricho‑ / ‑thrix", m: "hair", o: "G", d: "Body", ex: "trichome" },
+  { r: "pili‑", m: "hair", o: "L", d: "Body", ex: "pilose" },
+  { r: "seti‑", m: "bristle", o: "L", d: "Body", ex: "setose" },
+  { r: "villi‑", m: "shaggy hair, fleece", o: "L", d: "Body", ex: "villous" },
+  { r: "cirri‑ / ‑cirrus", m: "tendril, curl, fringe", o: "L", d: "Body", ex: "cirrose" },
+  { r: "acantho‑ / spino‑", m: "spine, thorn", o: "G / L", d: "Body", ex: "acanthoid" },
+  { r: "gastro‑ / ‑gaster", m: "belly, stomach", o: "G", d: "Body", ex: "gastric" },
+  { r: "ventri‑", m: "belly", o: "L", d: "Body", ex: "ventral" },
+  { r: "entero‑", m: "gut, intestine", o: "G", d: "Body", ex: "enteric" },
+  { r: "cardio‑ / ‑cardium", m: "heart", o: "G", d: "Body", ex: "cardiac" },
+  { r: "cordi‑", m: "heart", o: "L", d: "Body", ex: "cordate" },
+  { r: "pneumo‑ / ‑pnoea", m: "breath, lung, air", o: "G", d: "Body", ex: "pneumatic" },
+  { r: "haemo‑ / ‑aemia", m: "blood", o: "G", d: "Body", ex: "haemal" },
+  { r: "sangui‑", m: "blood", o: "L", d: "Body", ex: "sanguine" },
+  { r: "neuro‑ / ‑neuron", m: "nerve, sinew", o: "G", d: "Body", ex: "neural" },
+  { r: "myelo‑ / medullo‑", m: "marrow, pith", o: "G / L", d: "Body", ex: "myeloid" },
+  { r: "adeno‑ / ‑aden", m: "gland", o: "G", d: "Body", ex: "adenoid" },
+  { r: "masto‑ / mammi‑", m: "breast", o: "G / L", d: "Body", ex: "mastoid" },
+  { r: "oo‑ / ovi‑", m: "egg", o: "G / L", d: "Body", ex: "oviform" },
+  { r: "somato‑ / ‑soma", m: "body", o: "G", d: "Body", ex: "somatic" },
+  { r: "corpo‑", m: "body", o: "L", d: "Body", ex: "corporeal" },
+  { r: "tentaculi‑", m: "tentacle, feeler", o: "L", d: "Body", ex: "tentacular" },
+  { r: "palpi‑", m: "feeler, palp", o: "L", d: "Body", ex: "palpate" },
+  { r: "cilio‑", m: "eyelash, fine hair", o: "L", d: "Body", ex: "ciliate" },
+
+  // ── SIZE & FORM ────────────────────────────────────────
+  { r: "mega‑ / megalo‑", m: "large, great", o: "G", d: "Size & Form", ex: "megalodon" },
+  { r: "macro‑", m: "long, large", o: "G", d: "Size & Form", ex: "macrophage" },
+  { r: "giganto‑", m: "giant", o: "G", d: "Size & Form", ex: "gigantic" },
+  { r: "magni‑ / grandi‑", m: "great", o: "L", d: "Size & Form", ex: "magnify" },
+  { r: "micro‑", m: "small", o: "G", d: "Size & Form", ex: "microbe" },
+  { r: "nano‑", m: "dwarf, tiny", o: "G", d: "Size & Form", ex: "nanoid" },
+  { r: "parvi‑", m: "small", o: "L", d: "Size & Form", ex: "parvitude" },
+  { r: "brachy‑", m: "short", o: "G", d: "Size & Form", ex: "brachydactyl" },
+  { r: "dolicho‑", m: "long", o: "G", d: "Size & Form", ex: "dolichocephalic" },
+  { r: "longi‑", m: "long", o: "L", d: "Size & Form", ex: "longicorn" },
+  { r: "lepto‑", m: "slender, thin, fine", o: "G", d: "Size & Form", ex: "leptosome" },
+  { r: "tenui‑", m: "thin, slender", o: "L", d: "Size & Form", ex: "tenuous" },
+  { r: "pachy‑", m: "thick, stout", o: "G", d: "Size & Form", ex: "pachyderm" },
+  { r: "crasso‑", m: "thick, fleshy", o: "L", d: "Size & Form", ex: "crassulent" },
+  { r: "platy‑", m: "flat, broad", o: "G", d: "Size & Form", ex: "platypus" },
+  { r: "lati‑", m: "broad", o: "L", d: "Size & Form", ex: "latifoliate" },
+  { r: "steno‑", m: "narrow", o: "G", d: "Size & Form", ex: "stenophyllous" },
+  { r: "angusti‑", m: "narrow", o: "L", d: "Size & Form", ex: "angustate" },
+  { r: "eury‑", m: "wide, broad", o: "G", d: "Size & Form", ex: "eurytopic" },
+  { r: "helico‑ / spiro‑", m: "spiral, coil", o: "G / L", d: "Size & Form", ex: "helicoid" },
+  { r: "gyro‑", m: "ring, coil, whorl", o: "G", d: "Size & Form", ex: "gyrose" },
+  { r: "cyclo‑ / ‑cycle", m: "circle, ring", o: "G", d: "Size & Form", ex: "cyclostome" },
+  { r: "sphero‑ / globo‑", m: "round, globe", o: "G / L", d: "Size & Form", ex: "spheroid" },
+  { r: "fusi‑", m: "spindle-shaped, tapering", o: "L", d: "Size & Form", ex: "fusiform" },
+  { r: "cuneo‑", m: "wedge-shaped", o: "L", d: "Size & Form", ex: "cuneate" },
+  { r: "clavi‑", m: "club-shaped", o: "L", d: "Size & Form", ex: "clavate" },
+  { r: "acu‑ / oxy‑", m: "sharp, pointed", o: "L / G", d: "Size & Form", ex: "acuminate" },
+  { r: "reti‑", m: "net, netted", o: "L", d: "Size & Form", ex: "reticulate" },
+  { r: "dendri‑", m: "branching, tree-like", o: "G", d: "Size & Form", ex: "dendritic" },
+  { r: "lobo‑ / ‑lobe", m: "lobe", o: "G", d: "Size & Form", ex: "lobate" },
+  { r: "‑oid", m: "‑like, resembling", o: "G", d: "Size & Form", ex: "anthropoid" },
+  { r: "‑form / ‑iform", m: "in the shape of", o: "L", d: "Size & Form", ex: "cruciform" },
+  { r: "morpho‑ / ‑morph", m: "form, shape", o: "G", d: "Size & Form", ex: "polymorph" },
+  { r: "amorpho‑", m: "formless, shapeless", o: "G", d: "Size & Form", ex: "amorphous" },
+  { r: "iso‑", m: "equal", o: "G", d: "Size & Form", ex: "isopod" },
+  { r: "aniso‑", m: "unequal", o: "G", d: "Size & Form", ex: "anisophyllous" },
+  { r: "hetero‑", m: "different, other", o: "G", d: "Size & Form", ex: "heterophyllous" },
+  { r: "homo‑", m: "same", o: "G", d: "Size & Form", ex: "homomorphic" },
+  { r: "poly‑", m: "many", o: "G", d: "Size & Form", ex: "polypod" },
+  { r: "multi‑ / pluri‑", m: "many", o: "L", d: "Size & Form", ex: "multifid" },
+  { r: "oligo‑ / pauci‑", m: "few", o: "G / L", d: "Size & Form", ex: "oligotrophic" },
+  { r: "mono‑ / uni‑", m: "one", o: "G / L", d: "Size & Form", ex: "monopod" },
+  { r: "di‑ / bi‑", m: "two", o: "G / L", d: "Size & Form", ex: "dimorphic" },
+  { r: "tri‑", m: "three", o: "G/L", d: "Size & Form", ex: "triclad" },
+  { r: "tetra‑ / quadri‑", m: "four", o: "G / L", d: "Size & Form", ex: "tetrapod" },
+  { r: "penta‑ / quinque‑", m: "five", o: "G / L", d: "Size & Form", ex: "pentadactyl" },
+  { r: "hexa‑ / sex‑", m: "six", o: "G / L", d: "Size & Form", ex: "hexapod" },
+  { r: "octo‑", m: "eight", o: "G/L", d: "Size & Form", ex: "octopod" },
+  { r: "deca‑ / decem‑", m: "ten", o: "G / L", d: "Size & Form", ex: "decapod" },
+  { r: "myria‑", m: "countless, myriad", o: "G", d: "Size & Form", ex: "myriapod" },
+  { r: "hemi‑ / semi‑", m: "half", o: "G / L", d: "Size & Form", ex: "hemipteran" },
+  { r: "pan‑ / omni‑", m: "all", o: "G / L", d: "Size & Form", ex: "panspermia" },
+
+  // ── COLOUR & LIGHT ─────────────────────────────────────
+  { r: "chloro‑ / viri‑", m: "green", o: "G / L", d: "Colour & Light", ex: "chlorophyll" },
+  { r: "glauco‑", m: "pale blue-green, waxy bloom", o: "G", d: "Colour & Light", ex: "glaucous" },
+  { r: "porphyro‑ / purpureo‑", m: "purple", o: "G / L", d: "Colour & Light", ex: "porphyry" },
+  { r: "erythro‑ / rubro‑", m: "red", o: "G / L", d: "Colour & Light", ex: "erythrism" },
+  { r: "rhodo‑", m: "rose-red", o: "G", d: "Colour & Light", ex: "rhodopsin" },
+  { r: "xantho‑ / flavo‑", m: "yellow, golden", o: "G / L", d: "Colour & Light", ex: "xanthic" },
+  { r: "cyano‑ / caeruleo‑", m: "blue", o: "G / L", d: "Colour & Light", ex: "cyanic" },
+  { r: "melano‑ / atro‑", m: "black, dark", o: "G / L", d: "Colour & Light", ex: "melanism" },
+  { r: "leuco‑ / albo‑", m: "white", o: "G / L", d: "Colour & Light", ex: "leucous" },
+  { r: "polio‑ / cinereo‑", m: "grey, ash", o: "G / L", d: "Colour & Light", ex: "poliad" },
+  { r: "phaeo‑ / fusco‑", m: "dusky, dark brown", o: "G / L", d: "Colour & Light", ex: "phaeophyte" },
+  { r: "ferrugin‑", m: "rust-red", o: "L", d: "Colour & Light", ex: "ferruginous" },
+  { r: "irido‑", m: "rainbow, iridescent", o: "G", d: "Colour & Light", ex: "iridescent" },
+  { r: "poikilo‑", m: "varied, mottled, dappled", o: "G", d: "Colour & Light", ex: "poikilotherm" },
+  { r: "chromo‑ / ‑chrome", m: "colour", o: "G", d: "Colour & Light", ex: "chromatophore" },
+  { r: "phospho‑ / ‑phor", m: "light-bearing", o: "G", d: "Colour & Light", ex: "phosphor" },
+  { r: "photo‑ / luci‑", m: "light", o: "G / L", d: "Colour & Light", ex: "photophore" },
+  { r: "lampro‑", m: "bright, shining", o: "G", d: "Colour & Light", ex: "lamprophyre" },
+  { r: "nitido‑", m: "glossy, gleaming", o: "L", d: "Colour & Light", ex: "nitid" },
+  { r: "fulgur‑", m: "lightning, sudden flash", o: "L", d: "Colour & Light", ex: "fulgurite" },
+  { r: "umbra‑ / skio‑", m: "shadow, shade", o: "L / G", d: "Colour & Light", ex: "skiophyte" },
+  { r: "amauro‑ / scoto‑", m: "dim, darkened, blind", o: "G", d: "Colour & Light", ex: "amaurosis" },
+  { r: "crepusculo‑", m: "twilight", o: "L", d: "Colour & Light", ex: "crepuscular" },
+  { r: "nycto‑ / nocti‑", m: "night", o: "G / L", d: "Colour & Light", ex: "noctilucent" },
+  { r: "seleno‑ / luni‑", m: "moon", o: "G / L", d: "Colour & Light", ex: "selenotropic" },
+  { r: "helio‑ / soli‑", m: "sun", o: "G / L", d: "Colour & Light", ex: "heliophyte" },
+
+  // ── LIFE & DECAY ───────────────────────────────────────
+  { r: "bio‑ / ‑biosis", m: "life, living", o: "G", d: "Life & Decay", ex: "symbiosis" },
+  { r: "vivi‑", m: "living, alive", o: "L", d: "Life & Decay", ex: "viviparous" },
+  { r: "zoo‑ / ‑zoon", m: "animal", o: "G", d: "Life & Decay", ex: "protozoon" },
+  { r: "‑zoic", m: "of a life-era", o: "G", d: "Life & Decay", ex: "mesozoic" },
+  { r: "sapro‑", m: "rotten, decayed", o: "G", d: "Life & Decay", ex: "saprophyte" },
+  { r: "putri‑", m: "rotten", o: "L", d: "Life & Decay", ex: "putrescent" },
+  { r: "necro‑", m: "corpse, dead", o: "G", d: "Life & Decay", ex: "necrosis" },
+  { r: "thanato‑", m: "death", o: "G", d: "Life & Decay", ex: "thanatosis" },
+  { r: "morti‑ / leti‑", m: "death, deadly", o: "L", d: "Life & Decay", ex: "mortiferous" },
+  { r: "letho‑ / ‑lethe", m: "oblivion, forgetting", o: "G", d: "Life & Decay", ex: "lethean" },
+  { r: "tabe‑", m: "wasting, consumption", o: "L", d: "Life & Decay", ex: "tabescent" },
+  { r: "cario‑", m: "rot of bone or wood", o: "L", d: "Life & Decay", ex: "carious" },
+  { r: "detrit‑", m: "worn away, debris", o: "L", d: "Life & Decay", ex: "detrital" },
+  { r: "zymo‑", m: "ferment, leaven", o: "G", d: "Life & Decay", ex: "zymosis" },
+  { r: "gero‑ / geronto‑", m: "old age", o: "G", d: "Life & Decay", ex: "gerontic" },
+  { r: "seni‑ / veter‑", m: "old, aged", o: "L", d: "Life & Decay", ex: "senescent" },
+  { r: "palaeo‑ / archaeo‑", m: "ancient, primeval", o: "G", d: "Life & Decay", ex: "palaeozoic" },
+  { r: "proto‑", m: "first, primordial", o: "G", d: "Life & Decay", ex: "protoplast" },
+  { r: "neo‑ / novo‑", m: "new, young", o: "G / L", d: "Life & Decay", ex: "neophyte" },
+  { r: "crypto‑", m: "hidden, concealed", o: "G", d: "Life & Decay", ex: "cryptobiotic" },
+  { r: "laten‑ / dormi‑", m: "hidden, dormant", o: "L", d: "Life & Decay", ex: "latent" },
+  { r: "hypno‑ / somno‑", m: "sleep", o: "G / L", d: "Life & Decay", ex: "hypnospore" },
+  { r: "reliqui‑", m: "remnant, relic", o: "L", d: "Life & Decay", ex: "reliquiae" },
+  { r: "fossi‑", m: "dug up, buried", o: "L", d: "Life & Decay", ex: "fossil" },
+  { r: "vermi‑ / scoleco‑", m: "worm", o: "L / G", d: "Life & Decay", ex: "vermiform" },
+  { r: "larvi‑", m: "larva; (older) ghost, mask", o: "L", d: "Life & Decay", ex: "larval" },
+  { r: "terato‑", m: "monster, marvel", o: "G", d: "Life & Decay", ex: "teratoid" },
+  { r: "proteo‑", m: "changeable, protean", o: "G", d: "Life & Decay", ex: "protean" },
+  { r: "chimaero‑", m: "mixed-form, chimera", o: "G", d: "Life & Decay", ex: "chimeric" },
+  { r: "pseudo‑", m: "false, seeming", o: "G", d: "Life & Decay", ex: "pseudopod" },
+  { r: "xeno‑", m: "strange, alien", o: "G", d: "Life & Decay", ex: "xenobiotic" },
+  { r: "‑gen / ‑geny", m: "producing, born of", o: "G", d: "Life & Decay", ex: "pathogen" },
+
+  // ── HABITAT & MODE OF LIFE ─────────────────────────────
+  { r: "epi‑", m: "upon, on top of", o: "G", d: "Habitat", ex: "epiphyte" },
+  { r: "hypo‑ / sub‑", m: "under, beneath", o: "G / L", d: "Habitat", ex: "hypogeal" },
+  { r: "endo‑ / ento‑", m: "within, inside", o: "G", d: "Habitat", ex: "endophyte" },
+  { r: "exo‑ / ecto‑", m: "outside", o: "G", d: "Habitat", ex: "ectophyte" },
+  { r: "meso‑", m: "middle", o: "G", d: "Habitat", ex: "mesophyll" },
+  { r: "peri‑ / circum‑", m: "around", o: "G / L", d: "Habitat", ex: "perianth" },
+  { r: "para‑", m: "beside, near, awry", o: "G", d: "Habitat", ex: "parasite" },
+  { r: "syn‑ / sym‑", m: "together, with", o: "G", d: "Habitat", ex: "symbiont" },
+  { r: "auto‑", m: "self", o: "G", d: "Habitat", ex: "autotroph" },
+  { r: "allo‑", m: "other", o: "G", d: "Habitat", ex: "allogamy" },
+  { r: "tropho‑ / ‑trophy", m: "nourishment, feeding", o: "G", d: "Habitat", ex: "heterotroph" },
+  { r: "phago‑ / ‑phagy", m: "eating, devouring", o: "G", d: "Habitat", ex: "saprophagy" },
+  { r: "‑vore / ‑vorous", m: "devouring", o: "L", d: "Habitat", ex: "detritivore" },
+  { r: "philo‑ / ‑phily", m: "loving, thriving in", o: "G", d: "Habitat", ex: "hygrophilous" },
+  { r: "phobo‑ / ‑phobe", m: "fearing, avoiding", o: "G", d: "Habitat", ex: "photophobic" },
+  { r: "tropo‑ / ‑tropism", m: "turning, growth-response", o: "G", d: "Habitat", ex: "thigmotropism" },
+  { r: "‑taxis", m: "directed movement", o: "G", d: "Habitat", ex: "phototaxis" },
+  { r: "‑cole / ‑colous", m: "dwelling in or on", o: "L", d: "Habitat", ex: "saxicolous" },
+  { r: "sci‑ / skio‑", m: "shade-dwelling", o: "G", d: "Habitat", ex: "sciophyte" },
+  { r: "xero‑ / sicci‑", m: "dry", o: "G / L", d: "Habitat", ex: "xerophyte" },
+  { r: "hygro‑ / udo‑", m: "moist, damp", o: "G / L", d: "Habitat", ex: "hygrophyte" },
+  { r: "thermo‑", m: "heat, warm", o: "G", d: "Habitat", ex: "thermophile" },
+  { r: "cryo‑ / psychro‑", m: "cold, ice, chill", o: "G", d: "Habitat", ex: "cryophyte" },
+  { r: "troglo‑ / speleo‑", m: "cave, hollow", o: "G", d: "Habitat", ex: "troglodyte" },
+  { r: "rupi‑", m: "rock, cliff", o: "L", d: "Habitat", ex: "rupicolous" },
+  { r: "arbori‑", m: "tree-dwelling", o: "L", d: "Habitat", ex: "arboricolous" },
+  { r: "palud‑ / helo‑", m: "marsh, swamp, fen", o: "L / G", d: "Habitat", ex: "helophyte" },
+  { r: "uligino‑", m: "of wet, marshy ground", o: "L", d: "Habitat", ex: "uliginous" },
+  { r: "telmato‑", m: "pond, standing marsh", o: "G", d: "Habitat", ex: "telmatophyte" },
+  { r: "rheo‑", m: "current, flowing water", o: "G", d: "Habitat", ex: "rheophyte" },
+  { r: "ombro‑", m: "rain", o: "G", d: "Habitat", ex: "ombrophyte" },
+  { r: "phreato‑", m: "well, groundwater", o: "G", d: "Habitat", ex: "phreatophyte" },
+  { r: "bentho‑", m: "the deep, the sea-floor", o: "G", d: "Habitat", ex: "benthic" },
+  { r: "pelago‑", m: "open sea", o: "G", d: "Habitat", ex: "pelagic" },
+  { r: "limno‑", m: "lake, pool", o: "G", d: "Habitat", ex: "limnetic" },
+  { r: "potamo‑", m: "river", o: "G", d: "Habitat", ex: "potamic" },
+  { r: "thalasso‑", m: "sea", o: "G", d: "Habitat", ex: "thalassophyte" },
+  { r: "anemo‑ / vento‑", m: "wind", o: "G / L", d: "Habitat", ex: "anemophily" },
+  { r: "aero‑", m: "air", o: "G", d: "Habitat", ex: "aerophyte" },
+  { r: "chthono‑", m: "of the earth-depths, underworld", o: "G", d: "Habitat", ex: "chthonic" },
+
+  // ── MIND & SENSE ───────────────────────────────────────
+  { r: "mnem‑ / mnesi‑ / ‑mnesia", m: "memory", o: "G", d: "Mind & Sense", ex: "anamnesis" },
+  { r: "noo‑ / ‑noia", m: "mind, intellect", o: "G", d: "Mind & Sense", ex: "paranoia" },
+  { r: "phreno‑", m: "mind, will", o: "G", d: "Mind & Sense", ex: "phrenic" },
+  { r: "psycho‑ / ‑psyche", m: "soul, mind, breath", o: "G", d: "Mind & Sense", ex: "psychopomp" },
+  { r: "thymo‑", m: "spirit, temper, mood", o: "G", d: "Mind & Sense", ex: "thymic" },
+  { r: "gnoso‑ / ‑gnosis", m: "knowledge, knowing", o: "G", d: "Mind & Sense", ex: "prognosis" },
+  { r: "phanero‑ / ‑phany", m: "showing, made visible", o: "G", d: "Mind & Sense", ex: "epiphany" },
+  { r: "aesthe‑ / ‑aesthesia", m: "sensation, feeling", o: "G", d: "Mind & Sense", ex: "anaesthesia" },
+  { r: "phono‑ / ‑phone", m: "sound, voice", o: "G", d: "Mind & Sense", ex: "cacophony" },
+  { r: "echo‑", m: "echo, resounding", o: "G", d: "Mind & Sense", ex: "echoic" },
+  { r: "aeolo‑", m: "of the wind; wind-voiced", o: "G", d: "Mind & Sense", ex: "Aeolian" },
+  { r: "tono‑ / ‑tone", m: "tension, tone, pitch", o: "G", d: "Mind & Sense", ex: "monotone" },
+  { r: "chrono‑ / ‑chron", m: "time", o: "G", d: "Mind & Sense", ex: "chronic" },];
+
+  var DOMAINS = ["Plant","Material","Body","Size & Form","Colour & Light","Life & Decay","Habitat","Mind & Sense"];
+  var VOWELS = "aeiouy";
+  var STORE_KEY = "wordhord:root-hoard:custom";
+
+  function rootVariants(rStr){
+    return rStr.split("/").map(function(v){
+      var display = v.trim();
+      var startsH = /^[\u2011-]/.test(display);
+      var endsH = /[\u2011-]$/.test(display);
+      var pos;
+      if(startsH && endsH) pos = "either";
+      else if(startsH) pos = "back";
+      else if(endsH) pos = "front";
+      else pos = "either";
+      var core = display.replace(/[\u2011-]/g, "").toLowerCase();
+      return { display: display, core: core, pos: pos };
+    });
+  }
+  function pickVariant(rStr, position){
+    var vs = rootVariants(rStr), pref;
+    if(position === "front") pref = ["front","either","back"];
+    else if(position === "back") pref = ["back","either","front"];
+    else pref = ["either","front","back"];
+    for(var i=0;i<pref.length;i++){
+      var hit = vs.find(function(v){ return v.pos === pref[i]; });
+      if(hit) return hit;
+    }
+    return vs[0];
+  }
+  function chosenForms(parts){
+    var n = parts.length;
+    return parts.map(function(p, i){
+      var position;
+      if(n === 1 || i === 0) position = "front";
+      else if(i === n - 1) position = "back";
+      else position = "middle";
+      return pickVariant(p.r, position);
+    });
+  }
+  function forge(parts){
+    var cores = chosenForms(parts).map(function(v){ return v.core; });
+    var out = "";
+    cores.forEach(function(c, i){
+      if(i === 0){ out = c; return; }
+      var pv = VOWELS.indexOf(out.slice(-1)) >= 0;
+      var nv = VOWELS.indexOf(c[0]) >= 0;
+      if(pv && nv) out = out.slice(0, -1) + c;
+      else if(!pv && !nv) out = out + "o" + c;
+      else out = out + c;
+    });
+    return out.charAt(0).toUpperCase() + out.slice(1);
+  }
+
+  function pickOne(a){ return a[Math.floor(Math.random() * a.length)]; }
+  function canFront(x){ return rootVariants(x.r).some(function(v){ return v.pos !== "back"; }); }
+  function canBack(x){ return rootVariants(x.r).some(function(v){ return v.pos !== "front"; }); }
+
+  function conjure(all, origin){
+    var target = origin !== "all"
+      ? origin
+      : (Math.random() < 0.75 ? (Math.random() < 0.5 ? "G" : "L") : null);
+    function prefer(pool){
+      if(!target) return pool;
+      var sub = pool.filter(function(x){ return x.o.indexOf(target) >= 0; });
+      return sub.length ? sub : pool;
+    }
+    var tails = all.filter(canBack);
+    if(!tails.length) tails = all.slice();
+    var tail = pickOne(prefer(tails));
+
+    var heads = all.filter(function(x){ return canFront(x) && x !== tail; });
+    if(!heads.length) heads = all.filter(function(x){ return x !== tail; });
+    var head = pickOne(prefer(heads));
+
+    var parts = [head];
+    if(Math.random() < 0.33){
+      var mids = prefer(all.filter(function(x){ return x !== head && x !== tail; }));
+      if(mids.length) parts.push(pickOne(mids));
+    }
+    parts.push(tail);
+    return parts.slice(0, 4);
+  }
+
+  function esc(s){
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function oClass(o){ return "wh-o-" + (o.indexOf("/") >= 0 ? "GL" : o); }
+
+  var state = {
+    query: "", origin: "all", domains: new Set(DOMAINS),
+    anvil: [], custom: [], _rows: []
+  };
+  try {
+    var raw = localStorage.getItem(STORE_KEY);
+    if(raw) state.custom = JSON.parse(raw) || [];
+  } catch(e){}
+
+  function allRoots(){
+    return DATA.concat(state.custom.map(function(c){
+      var o = {}; for(var k in c) o[k] = c[k]; o.mine = true; return o;
+    }));
+  }
+  function filtered(){
+    var q = state.query.trim().toLowerCase();
+    return allRoots().filter(function(x){
+      if(!state.domains.has(x.d)) return false;
+      if(state.origin !== "all" && x.o.indexOf(state.origin) < 0) return false;
+      if(!q) return true;
+      return (x.r + " " + x.m + " " + (x.ex || "")).toLowerCase().indexOf(q) >= 0;
+    });
+  }
+
+  function renderAnvil(){
+    var el = document.getElementById("anvilIn");
+    var anvil = state.anvil;
+    var chosen = anvil.length ? chosenForms(anvil) : [];
+    var h = '<span class="wh-anvil-lab">Anvil</span>';
+    h += '<div class="wh-conjure"><button class="wh-conjure-btn" data-action="randomize" title="assemble a random set of roots (click again to re-roll)">randomize</button></div>';
+    h += '<div class="wh-slots">';
+    if(anvil.length === 0){
+      h += '<span class="wh-empty-slot">tap any specimen to add it here\u2026</span>';
+    } else {
+      anvil.forEach(function(p, i){
+        var disp = chosen[i] ? chosen[i].display : p.r.split("/")[0].trim();
+        h += '<span class="wh-slot">' + esc(disp) +
+             '<button class="wh-slot-x" data-action="remove" data-i="' + i + '" aria-label="remove this part" title="remove this part">\u00d7</button></span>';
+      });
+    }
+    h += '</div>';
+    if(anvil.length > 0){
+      var coinage = forge(anvil);
+      var gloss = anvil.map(function(p){ return p.m.split(",")[0].trim(); }).join("\u2011");
+      h += '<div class="wh-coin"><div class="wh-coin-name">' + esc(coinage) +
+           '</div><div class="wh-coin-gloss">\u201c' + esc(gloss) + '\u201d</div></div>';
+      h += '<button class="wh-btn" data-action="clear">clear</button>';
+    }
+    el.innerHTML = h;
+  }
+
+  function renderChips(){
+    var h = "";
+    DOMAINS.forEach(function(d){
+      h += '<button class="wh-chip" data-on="' + state.domains.has(d) + '" data-domain="' + esc(d) + '">' + esc(d) + '</button>';
+    });
+    h += '<div class="wh-orig">';
+    ["all","G","L"].forEach(function(o){
+      h += '<button class="wh-chip" data-on="' + (state.origin === o) + '" data-origin="' + o + '">' + (o === "all" ? "all" : o) + '</button>';
+    });
+    h += '</div>';
+    document.getElementById("chips").innerHTML = h;
+  }
+
+  function renderResults(){
+    var el = document.getElementById("results");
+    var items = filtered();
+    state._rows = [];
+    if(items.length === 0){
+      el.innerHTML = '<div class="wh-empty">No roots answer to that. Try a plainer meaning \u2014 \u201cwater\u201d, \u201cdark\u201d, \u201cworm\u201d.</div>';
+      return;
+    }
+    var groups = {};
+    DOMAINS.forEach(function(d){ groups[d] = []; });
+    items.forEach(function(x){ (groups[x.d] = groups[x.d] || []).push(x); });
+    var h = "";
+    DOMAINS.forEach(function(d){
+      var arr = groups[d];
+      if(!arr || !arr.length) return;
+      h += '<section class="wh-domain"><div class="wh-dom-h"><span class="wh-dom-name">' + esc(d) +
+           '</span><span class="wh-dom-n">' + arr.length + '</span></div><div class="wh-list">';
+      arr.forEach(function(x){
+        var idx = state._rows.length;
+        state._rows.push(x);
+        h += '<div class="wh-item" data-i="' + idx + '" role="button" tabindex="0">' +
+               '<div class="wh-r"><span' + (x.mine ? ' class="mine"' : '') + '>' + esc(x.r) + '</span></div>' +
+               '<div class="wh-m">' + esc(x.m) + '</div>' +
+               '<div class="wh-meta">' +
+                 (x.ex ? '<span class="wh-ex">' + esc(x.ex) + '</span>' : '') +
+                 '<span class="wh-o ' + oClass(x.o) + '">' + esc(x.o) + '</span>' +
+                 '<span class="wh-add">\uff0b</span>' +
+               '</div></div>';
+      });
+      h += '</div></section>';
+    });
+    el.innerHTML = h;
+  }
+
+  function renderMine(){
+    var el = document.getElementById("mine");
+    if(!state.custom.length){ el.innerHTML = ""; return; }
+    var h = '<div class="wh-mine-list">';
+    state.custom.forEach(function(c, i){
+      h += '<div class="wh-mine-row"><span class="r">' + esc(c.r) + '</span><span>' + esc(c.m) + '</span>' +
+           '<span class="wh-o ' + oClass(c.o) + '" style="font-size:.68rem">' + esc(c.o) + ' \u00b7 ' + esc(c.d) + '</span>' +
+           '<button class="wh-x" data-i="' + i + '">remove</button></div>';
+    });
+    h += '</div>';
+    el.innerHTML = h;
+  }
+
+  var noteTimer = null;
+  function setNote(msg){
+    var n = document.getElementById("note");
+    n.textContent = msg;
+    if(noteTimer) clearTimeout(noteTimer);
+    if(msg) noteTimer = setTimeout(function(){ n.textContent = ""; }, 2200);
+  }
+
+  function addToAnvil(x){ if(state.anvil.length < 4){ state.anvil = state.anvil.concat([x]); renderAnvil(); } }
+  function removeFromAnvil(i){ state.anvil = state.anvil.filter(function(_, j){ return j !== i; }); renderAnvil(); }
+  function clearAnvil(){ state.anvil = []; renderAnvil(); }
+  function randomize(){ state.anvil = conjure(allRoots(), state.origin); renderAnvil(); }
+
+  function toggleDomain(d){
+    var n = new Set(state.domains);
+    if(n.has(d)) n.delete(d); else n.add(d);
+    state.domains = n.size ? n : new Set(DOMAINS);
+    renderChips(); renderResults();
+  }
+  function setOrigin(o){ state.origin = o; renderChips(); renderResults(); }
+
+  function saveCustom(){
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state.custom)); return true; }
+    catch(e){ return false; }
+  }
+  function addCustom(){
+    var fr = document.getElementById("fr"), fm = document.getElementById("fm");
+    var r = fr.value.trim(), m = fm.value.trim();
+    var o = document.getElementById("fo").value, d = document.getElementById("fd").value;
+    if(!r || !m) return;
+    state.custom = state.custom.concat([{ r: r, m: m, o: o, d: d, ex: "" }]);
+    fr.value = ""; fm.value = "";
+    setNote(saveCustom() ? "Saved to this browser" : "Kept for this session");
+    renderMine(); renderResults();
+  }
+  function removeCustom(i){
+    state.custom = state.custom.filter(function(_, j){ return j !== i; });
+    saveCustom();
+    renderMine(); renderResults();
+  }
+
+  function wire(){
+    document.getElementById("search").addEventListener("input", function(e){
+      state.query = e.target.value; renderResults();
+    });
+    document.getElementById("chips").addEventListener("click", function(e){
+      var b = e.target.closest("button"); if(!b) return;
+      if(b.dataset.domain !== undefined) toggleDomain(b.dataset.domain);
+      else if(b.dataset.origin !== undefined) setOrigin(b.dataset.origin);
+    });
+    document.getElementById("anvilIn").addEventListener("click", function(e){
+      var b = e.target.closest("button"); if(!b) return;
+      var a = b.dataset.action;
+      if(a === "randomize") randomize();
+      else if(a === "clear") clearAnvil();
+      else if(a === "remove") removeFromAnvil(parseInt(b.dataset.i, 10));
+    });
+    var results = document.getElementById("results");
+    results.addEventListener("click", function(e){
+      var row = e.target.closest(".wh-item"); if(!row) return;
+      var x = state._rows[parseInt(row.dataset.i, 10)]; if(x) addToAnvil(x);
+    });
+    results.addEventListener("keydown", function(e){
+      if(e.key !== "Enter") return;
+      var row = e.target.closest(".wh-item"); if(!row) return;
+      e.preventDefault();
+      var x = state._rows[parseInt(row.dataset.i, 10)]; if(x) addToAnvil(x);
+    });
+    document.getElementById("addBtn").addEventListener("click", addCustom);
+    ["fr","fm"].forEach(function(id){
+      document.getElementById(id).addEventListener("keydown", function(e){ if(e.key === "Enter") addCustom(); });
+    });
+    document.getElementById("mine").addEventListener("click", function(e){
+      var b = e.target.closest("button.wh-x"); if(!b) return;
+      removeCustom(parseInt(b.dataset.i, 10));
+    });
+  }
+
+  // populate domain select, then first render
+  document.getElementById("fd").innerHTML = DOMAINS.map(function(d){
+    return '<option value="' + esc(d) + '">' + esc(d) + '</option>';
+  }).join("");
+
+  renderAnvil(); renderChips(); renderResults(); renderMine(); wire();
+})();
+</script>
+</body>
+</html>
