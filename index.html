@@ -95,6 +95,14 @@
         .wh-o-G{color:var(--verd-d);border-color:var(--verd);}
         .wh-o-L{color:var(--rust);border-color:var(--rust);}
         .wh-o-GL{color:var(--brass);border-color:var(--brass);}
+        .wh-o-O{color:#3E5C76;border-color:#3E5C76;}
+        .wh-o-A{color:#9A6A2F;border-color:#9A6A2F;}
+        .wh-flash{position:fixed;left:50%;bottom:2rem;transform:translateX(-50%) translateY(1rem);
+          max-width:min(92vw,560px);background:var(--ink);color:#fff;font-family:'Fraunces',serif;
+          font-style:italic;font-size:.92rem;line-height:1.55;text-align:center;padding:1rem 1.3rem;
+          border-radius:3px;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;
+          transition:opacity .35s ease,transform .35s ease;z-index:50;}
+        .wh-flash.show{opacity:1;transform:translateX(-50%) translateY(0);}
         .wh-add{opacity:0;font-family:'IBM Plex Mono',monospace;font-size:1.05rem;color:var(--verd-d);
           transition:.12s;line-height:1;}
         .wh-empty{padding:3rem 0;text-align:center;color:var(--ink2);font-family:'Fraunces',serif;font-style:italic;font-size:1.2rem;}
@@ -130,6 +138,7 @@
 </head>
 <body>
 <div class="wh-root">
+<div id="wh-flash" class="wh-flash" role="status" aria-live="polite"></div>
   <div class="wh-wrap">
     <header class="wh-mast">
       <div class="wh-eyebrow">The People's Wordhord &middot; Appendix</div>
@@ -761,11 +770,100 @@
   { r: "patho‑ / ‑pathy", m: "feeling, sensing, affect", o: "G", d: "Mind & Sense", ex: "empathy" },
   { r: "claro‑ / clari‑", m: "clear, lucid, clear-seeing", o: "L", d: "Mind & Sense", ex: "clairvoyance" },
   { r: "cogni‑ / cogit‑", m: "knowing, thinking", o: "L", d: "Mind & Sense", ex: "cognition" },
+
+  // ── OLD ENGLISH (O) + ARABIC (A) ──
+  { r: "‑wright / wright‑", m: "maker, craftsman", o: "O", d: "Roles", ex: "playwright" },
+  { r: "‑smith / smith‑", m: "smith, forger", o: "O", d: "Roles", ex: "wordsmith" },
+  { r: "‑monger / monger‑", m: "dealer, trader", o: "O", d: "Roles", ex: "fishmonger" },
+  { r: "‑herd / herd‑", m: "herder, keeper", o: "O", d: "Roles", ex: "shepherd" },
+  { r: "‑ward / ‑warden", m: "guard, keeper", o: "O", d: "Roles", ex: "warden" },
+  { r: "‑reaver / reave‑", m: "plunderer, robber", o: "O", d: "Roles", ex: "reaver" },
+  { r: "‑thane / thane‑", m: "retainer, warrior", o: "O", d: "Roles", ex: "thane" },
+  { r: "‑wyrm / wyrm‑", m: "serpent, dragon", o: "O", d: "Creatures", ex: "wyrm" },
+  { r: "‑deor / deor‑", m: "beast, wild animal", o: "O", d: "Creatures", ex: "deer" },
+  { r: "‑wight / wight‑", m: "creature, being, spirit", o: "O", d: "Creatures", ex: "wight" },
+  { r: "raven‑ / ‑raven", m: "raven", o: "O", d: "Creatures", ex: "raven" },
+  { r: "wolf‑ / ‑wolf", m: "wolf", o: "O", d: "Creatures", ex: "werewolf" },
+  { r: "grim‑ / ‑grim", m: "fierce, grim, cruel", o: "O", d: "Temperament", ex: "grim" },
+  { r: "fell‑ / ‑fell", m: "deadly, dire, cruel", o: "O", d: "Temperament", ex: "fell" },
+  { r: "‑dread / dread‑", m: "dread, terror", o: "O", d: "Temperament", ex: "dread" },
+  { r: "‑mere / mere‑", m: "pool, lake, sea", o: "O", d: "Habitat", ex: "Windermere" },
+  { r: "‑barrow / barrow‑", m: "grave-mound, tumulus", o: "O", d: "Habitat", ex: "barrow" },
+  { r: "‑moor / moor‑", m: "moor, heath", o: "O", d: "Habitat", ex: "moorland" },
+  { r: "‑fen / fen‑", m: "fen, marsh, bog", o: "O", d: "Habitat", ex: "fenland" },
+  { r: "‑weald / weald‑", m: "forest, wood", o: "O", d: "Habitat", ex: "weald" },
+  { r: "‑holt / holt‑", m: "wood, thicket", o: "O", d: "Habitat", ex: "holt" },
+  { r: "blood‑ / ‑blood", m: "blood, gore", o: "O", d: "Body", ex: "bloodhound" },
+  { r: "bone‑ / ‑bone", m: "bone", o: "O", d: "Body", ex: "bonehouse" },
+  { r: "‑maw / maw‑", m: "maw, gullet, jaws", o: "O", d: "Body", ex: "maw" },
+  { r: "night‑ / ‑night", m: "night, dark", o: "O", d: "Colour & Light", ex: "nightfall" },
+  { r: "‑shadow / shadow‑", m: "shadow, shade", o: "O", d: "Colour & Light", ex: "shadow" },
+  { r: "‑stone / stone‑", m: "stone", o: "O", d: "Material", ex: "standing-stone" },
+  { r: "iron‑ / ‑iron", m: "iron", o: "O", d: "Material", ex: "ironwood" },
+  { r: "‑blade / blade‑", m: "blade, sword", o: "O", d: "Implements", ex: "blade" },
+  { r: "‑helm / helm‑", m: "helm, protection", o: "O", d: "Implements", ex: "helm" },
+  { r: "‑hoard / hoard‑", m: "hoard, treasure", o: "O", d: "Implements", ex: "hoard" },
+  { r: "wyrd‑ / ‑wyrd", m: "fate, doom, destiny", o: "O", d: "Mind & Sense", ex: "weird" },
+  { r: "‑tide / tide‑", m: "tide, time, season", o: "O", d: "Effects", ex: "eventide" },
+  { r: "‑bane / bane‑", m: "slayer, poison, ruin", o: "O", d: "Life & Decay", ex: "wolfsbane" },
+  { r: "kimiya‑ / ‑kimiya", m: "alchemy, transmutation", o: "A", d: "Effects", ex: "alchemy" },
+  { r: "simoom‑ / ‑simoom", m: "scorching poison wind", o: "A", d: "Effects", ex: "simoom" },
+  { r: "qutb‑ / ‑qutb", m: "axis, pole, pivot", o: "A", d: "Effects", ex: "Qutb" },
+  { r: "iksir‑ / ‑iksir", m: "elixir, essence", o: "A", d: "Material", ex: "elixir" },
+  { r: "alkahest‑ / ‑alkahest", m: "universal solvent", o: "A", d: "Material", ex: "alkahest" },
+  { r: "kali‑ / ‑kali", m: "alkali, ash-salt", o: "A", d: "Material", ex: "alkali" },
+  { r: "alembic‑ / ‑alembic", m: "alembic, still", o: "A", d: "Implements", ex: "alembic" },
+  { r: "talisman‑ / ‑talisman", m: "talisman, charm", o: "A", d: "Implements", ex: "talisman" },
+  { r: "makhzan‑ / ‑makhzan", m: "storehouse, magazine", o: "A", d: "Implements", ex: "magazine" },
+  { r: "sahra‑ / ‑sahra", m: "desert, wasteland", o: "A", d: "Habitat", ex: "Sahara" },
+  { r: "najm‑ / ‑najm", m: "star", o: "A", d: "Habitat", ex: "najm" },
+  { r: "qamar‑ / ‑qamar", m: "moon", o: "A", d: "Habitat", ex: "Qamar" },
+  { r: "azimuth‑ / ‑azimuth", m: "direction, bearing", o: "A", d: "Habitat", ex: "azimuth" },
+  { r: "nadir‑ / ‑nadir", m: "nadir, lowest point", o: "A", d: "Habitat", ex: "nadir" },
+  { r: "zenith‑ / ‑zenith", m: "zenith, highest point", o: "A", d: "Habitat", ex: "zenith" },
+  { r: "ghoul‑ / ‑ghoul", m: "ghoul, grave-demon", o: "A", d: "Creatures", ex: "ghoul" },
+  { r: "jinn‑ / ‑jinn", m: "jinn, fire-spirit", o: "A", d: "Creatures", ex: "genie" },
+  { r: "ifrit‑ / ‑ifrit", m: "ifrit, fire-demon", o: "A", d: "Creatures", ex: "ifrit" },
+  { r: "roc‑ / ‑roc", m: "roc, giant bird", o: "A", d: "Creatures", ex: "roc" },
+  { r: "kismet‑ / ‑kismet", m: "fate, destiny", o: "A", d: "Mind & Sense", ex: "kismet" },
+  { r: "sifr‑ / ‑sifr", m: "cipher, zero, nothing", o: "A", d: "Mind & Sense", ex: "cipher" },
+
+  // ── ARABIC MONSTERS (A) ──
+  { r: "marid‑ / ‑marid", m: "marid, mighty water-jinn", o: "A", d: "Creatures", ex: "marid" },
+  { r: "silat‑ / ‑silat", m: "si'lat, shapeshifting she-demon", o: "A", d: "Creatures", ex: "silat" },
+  { r: "qutrub‑ / ‑qutrub", m: "qutrub, restless night-demon", o: "A", d: "Creatures", ex: "qutrub" },
+  { r: "jann‑ / ‑jann", m: "jann, primal jinn", o: "A", d: "Creatures", ex: "jann" },
+  { r: "shaitan‑ / ‑shaitan", m: "shaitan, devil, evil spirit", o: "A", d: "Creatures", ex: "shaitan" },
+  { r: "hinn‑ / ‑hinn", m: "hinn, lesser jinn", o: "A", d: "Creatures", ex: "hinn" },
+  { r: "nasnas‑ / ‑nasnas", m: "nasnas, half-bodied monster", o: "A", d: "Creatures", ex: "nasnas" },
+  { r: "shiqq‑ / ‑shiqq", m: "shiqq, half-demon", o: "A", d: "Creatures", ex: "shiqq" },
+  { r: "ghaddar‑ / ‑ghaddar", m: "ghaddar, border-demon", o: "A", d: "Creatures", ex: "ghaddar" },
+  { r: "hama‑ / ‑hama", m: "hama, vengeful skull-owl", o: "A", d: "Creatures", ex: "hama" },
+  { r: "alzabo‑ / ‑alzabo", m: "alzabo, memory-eating hyena-beast", o: "A", d: "Creatures", ex: "alzabo" },
+  { r: "dabu‑ / ‑dabu", m: "dabu, hyena", o: "A", d: "Creatures", ex: "hyena" },
+  { r: "wahsh‑ / ‑wahsh", m: "wahsh, wild beast, monster", o: "A", d: "Creatures", ex: "wahsh" },
+  { r: "sabu‑ / ‑sabu", m: "sabu, beast of prey", o: "A", d: "Creatures", ex: "predator" },
+  { r: "miraj‑ / ‑miraj", m: "al-miraj, horned hare", o: "A", d: "Creatures", ex: "miraj" },
+  { r: "karkadann‑ / ‑karkadann", m: "karkadann, unicorn-rhinoceros", o: "A", d: "Creatures", ex: "karkadann" },
+  { r: "buraq‑ / ‑buraq", m: "buraq, winged steed", o: "A", d: "Creatures", ex: "buraq" },
+  { r: "dabb‑ / ‑dabb", m: "dabb, spiny-tailed lizard", o: "A", d: "Creatures", ex: "dabb" },
+  { r: "qirsh‑ / ‑qirsh", m: "qirsh, shark", o: "A", d: "Creatures", ex: "shark" },
+  { r: "timsah‑ / ‑timsah", m: "timsah, crocodile", o: "A", d: "Creatures", ex: "timsah" },
+  { r: "tinnin‑ / ‑tinnin", m: "tinnin, dragon, sea-serpent", o: "A", d: "Creatures", ex: "tinnin" },
+  { r: "thuban‑ / ‑thuban", m: "thuban, great serpent", o: "A", d: "Creatures", ex: "Thuban" },
+  { r: "hayya‑ / ‑hayya", m: "hayya, serpent", o: "A", d: "Creatures", ex: "hayya" },
+  { r: "afa‑ / ‑afa", m: "afa, viper", o: "A", d: "Creatures", ex: "viper" },
+  { r: "anqa‑ / ‑anqa", m: "anqa, Arabian phoenix", o: "A", d: "Creatures", ex: "anqa" },
+  { r: "bahamut‑ / ‑bahamut", m: "bahamut, world-bearing leviathan", o: "A", d: "Creatures", ex: "bahamut" },
+  { r: "hut‑ / ‑hut", m: "hut, whale, great fish", o: "A", d: "Creatures", ex: "leviathan" },
+  { r: "dandan‑ / ‑dandan", m: "dandan, giant sea-monster", o: "A", d: "Creatures", ex: "dandan" },
+  { r: "falak‑ / ‑falak", m: "falak, cosmic serpent", o: "A", d: "Creatures", ex: "falak" },
 ];
 
   var DOMAINS = ["Plant","Material","Body","Creatures","Size & Form","Colour & Light","Life & Decay","Habitat","Mind & Sense","Temperament","Roles","Implements","Effects"];
   var VOWELS = "aeiouy";
   var STORE_KEY = "wordhord:root-hoard:custom";
+  var UNLOCK_KEY = "wordhord:root-hoard:unlocked";
 
   function rootVariants(rStr){
     return rStr.split("/").map(function(v){
@@ -805,14 +903,18 @@
   function forge(parts){
     var cores = chosenForms(parts).map(function(v){ return v.core; });
     var out = "";
-    cores.forEach(function(c, i){
-      if(i === 0){ out = c; return; }
+    for(var i = 0; i < cores.length; i++){
+      var c = cores[i];
+      if(i === 0){ out = c; continue; }
+      // Old English / Arabic roots juxtapose kenning-style; suppress the classical -o- linker
+      var nonClassical = /[OA]/.test(parts[i-1].o) || /[OA]/.test(parts[i].o);
+      if(nonClassical){ out = out + c; continue; }
       var pv = VOWELS.indexOf(out.slice(-1)) >= 0;
       var nv = VOWELS.indexOf(c[0]) >= 0;
       if(pv && nv) out = out.slice(0, -1) + c;
       else if(!pv && !nv) out = out + "o" + c;
       else out = out + c;
-    });
+    }
     return out.charAt(0).toUpperCase() + out.slice(1);
   }
 
@@ -821,9 +923,12 @@
   function canBack(x){ return rootVariants(x.r).some(function(v){ return v.pos !== "front"; }); }
 
   function conjure(all, origin){
+    var langs = ["G","L"];
+    if(state.unlocked.has("O")) langs.push("O");
+    if(state.unlocked.has("A")) langs.push("A");
     var target = origin !== "all"
       ? origin
-      : (Math.random() < 0.75 ? (Math.random() < 0.5 ? "G" : "L") : null);
+      : (Math.random() < 0.75 ? pickOne(langs) : null);
     function prefer(pool){
       if(!target) return pool;
       var sub = pool.filter(function(x){ return x.o.indexOf(target) >= 0; });
@@ -847,11 +952,15 @@
 
   var state = {
     query: "", origin: "all", domains: new Set(DOMAINS),
-    anvil: [], custom: [], _rows: []
+    anvil: [], custom: [], _rows: [], unlocked: new Set(["G","L"])
   };
   try {
     var raw = localStorage.getItem(STORE_KEY);
     if(raw) state.custom = JSON.parse(raw) || [];
+  } catch(e){}
+  try {
+    var rawU = localStorage.getItem(UNLOCK_KEY);
+    if(rawU) (JSON.parse(rawU) || []).forEach(function(f){ state.unlocked.add(f); });
   } catch(e){}
 
   function allRoots(){
@@ -859,9 +968,12 @@
       var o = {}; for(var k in c) o[k] = c[k]; o.mine = true; return o;
     }));
   }
+  function originFlags(x){ return x.o.split("/").map(function(s){ return s.trim(); }); }
+  function isUnlocked(x){ return originFlags(x).every(function(f){ return state.unlocked.has(f); }); }
+  function visibleRoots(){ return allRoots().filter(isUnlocked); }
   function filtered(){
     var q = state.query.trim().toLowerCase();
-    return allRoots().filter(function(x){
+    return visibleRoots().filter(function(x){
       if(!state.domains.has(x.d)) return false;
       if(state.origin !== "all" && x.o.indexOf(state.origin) < 0) return false;
       if(!q) return true;
@@ -902,8 +1014,12 @@
       h += '<button class="wh-chip" data-on="' + state.domains.has(d) + '" data-domain="' + esc(d) + '">' + esc(d) + '</button>';
     });
     h += '<div class="wh-orig">';
-    ["all","G","L"].forEach(function(o){
-      h += '<button class="wh-chip" data-on="' + (state.origin === o) + '" data-origin="' + o + '">' + (o === "all" ? "all" : o) + '</button>';
+    var origins = ["all","G","L"];
+    if(state.unlocked.has("O")) origins.push("O");
+    if(state.unlocked.has("A")) origins.push("A");
+    var origTitle = { O: "Old English", A: "Arabic" };
+    origins.forEach(function(o){
+      h += '<button class="wh-chip" data-on="' + (state.origin === o) + '" data-origin="' + o + '"' + (origTitle[o] ? ' title="' + origTitle[o] + '"' : '') + '>' + (o === "all" ? "all" : o) + '</button>';
     });
     h += '</div>';
     document.getElementById("chips").innerHTML = h;
@@ -968,8 +1084,8 @@
   function removeFromAnvil(i){ state.anvil = state.anvil.filter(function(_, j){ return j !== i; }); renderAnvil(); }
   function clearAnvil(){ state.anvil = []; renderAnvil(); }
   function randomize(){
-    var pool = allRoots().filter(function(x){ return state.domains.has(x.d); });
-    if(pool.length < 2) pool = allRoots(); // fall back if the selection is too small to pair
+    var pool = visibleRoots().filter(function(x){ return state.domains.has(x.d); });
+    if(pool.length < 2) pool = visibleRoots(); // fall back if the selection is too small to pair
     state.anvil = conjure(pool, state.origin);
     renderAnvil();
   }
@@ -982,6 +1098,21 @@
   }
   function setOrigin(o){ state.origin = o; renderChips(); renderResults(); }
 
+  function saveUnlocked(){
+    try {
+      var extra = Array.from(state.unlocked).filter(function(f){ return f !== "G" && f !== "L"; });
+      localStorage.setItem(UNLOCK_KEY, JSON.stringify(extra));
+    } catch(e){}
+  }
+  var flashTimer = null;
+  function showFlash(msg, dur){
+    var f = document.getElementById("wh-flash");
+    if(!f) return;
+    f.innerHTML = msg;
+    f.classList.add("show");
+    if(flashTimer) clearTimeout(flashTimer);
+    flashTimer = setTimeout(function(){ f.classList.remove("show"); }, dur || 2600);
+  }
   function saveCustom(){
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state.custom)); return true; }
     catch(e){ return false; }
@@ -1003,8 +1134,28 @@
   }
 
   function wire(){
-    document.getElementById("search").addEventListener("input", function(e){
+    var searchEl = document.getElementById("search");
+    searchEl.addEventListener("input", function(e){
       state.query = e.target.value; renderResults();
+    });
+    searchEl.addEventListener("keydown", function(e){
+      if(e.key !== "Enter") return;
+      var phrase = e.target.value.toLowerCase().replace(/[^a-z ]+/g, "").replace(/ +/g, " ").trim();
+      var unlock = phrase === "ultans library" ? "O" : (phrase === "break the glass" ? "A" : null);
+      if(!unlock) return;
+      e.preventDefault();
+      var already = state.unlocked.has(unlock);
+      state.unlocked.add(unlock); saveUnlocked();
+      e.target.value = ""; state.query = "";
+      renderChips(); renderResults();
+            var flashMsg, flashDur = 2600;
+      if(unlock === "O"){
+        if(already){ flashMsg = "The Old English shelf is already open."; }
+        else { flashMsg = "Books bound in the hides of beasts long vanished; pages that are wafers of jade and shell; and words set down on a hundred substances that were never paper. My stacks run deeper than any lamp has reached.<br><br>The Old English shelf awakens."; flashDur = 60000; }
+      } else {
+        flashMsg = already ? "The glass is already broken." : "You break the glass. The Arabic shelf opens.";
+      }
+      showFlash(flashMsg, flashDur);
     });
     document.getElementById("chips").addEventListener("click", function(e){
       var b = e.target.closest("button"); if(!b) return;
